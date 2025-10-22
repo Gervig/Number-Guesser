@@ -43,6 +43,11 @@ function handleGuessClick(event) {
   } else if (clickedButton.classList.contains("btn_correct")) {
     console.log("CORRECT");
     li.innerHTML = `I'm guessing ${number} → That was correct!`;
+
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      `<p>I'm finally done! :)</p>`
+    );
   }
 }
 
