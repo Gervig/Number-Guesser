@@ -2,36 +2,61 @@
 
 window.addEventListener("DOMContentLoaded", main);
 
-const number = 42;
-
 function main() {
   console.log("JavaScript is running!");
 
-  document.querySelector("#btn_guess").addEventListener("click", buttonClicked);
+  // add eventlistener for btn_start
+  document.querySelector("#btn_start").addEventListener("click", startGame);
+  // event delegation on the list
+  document
+    .querySelector("#guesses")
+    .addEventListener("click", handleGuessClick);
 }
 
-function buttonClicked() {
-  console.log("Button clicked!");
-  // recieve guess
-  const guess = document.querySelector("#guess").valueAsNumber;
-  console.log(guess);
-  // compare guess with number
-  if (guess > number) {
-    console.log("That was too high");
-    document
-      .querySelector("#guesses")
-      .insertAdjacentHTML(
-        "beforeend",
-        `<li>You guessed ${guess} - that was too high!</li>`
-      );
+function startGame() {
+  console.log("Game started!");
+
+  const list = document.getElementById("guesses");
+  // Clear list
+  while (list.firstElementChild) {
+    list.removeChild(list.firstElementChild);
   }
-  // handle too high
-  // handle too low
-  // handle correct guess
-  if (guess == number) {
-    //TODO: also write that the guess was correct
-    document
-      .querySelector("#btn_guess")
-      .removeEventListener("click", buttonClicked);
+
+  addGuess();
+}
+
+function handleGuessClick(event) {
+  const clickedButton = event.target;
+  if (!(clickedButton instanceof HTMLButtonElement)) return;
+
+  const li = clickedButton.closest("li");
+  const number = li.dataset.guess; // read stored guess
+
+  if (clickedButton.classList.contains("btn_low")) {
+    console.log("TOO LOW");
+    li.innerHTML = `I'm guessing ${number} → That was too low!`;
+    addGuess();
+  } else if (clickedButton.classList.contains("btn_high")) {
+    console.log("TOO HIGH");
+    li.innerHTML = `I'm guessing ${number} → That was too high!`;
+    addGuess();
+  } else if (clickedButton.classList.contains("btn_correct")) {
+    console.log("CORRECT");
+    li.innerHTML = `I'm guessing ${number} → That was correct!`;
   }
+}
+
+function addGuess() {
+  const list = document.getElementById("guesses");
+  const guess = Math.floor(Math.random() * 100) + 1;
+
+  list.insertAdjacentHTML(
+    "beforeend",
+    `<li data-guess="${guess}">
+      I'm guessing ${guess} - Is that 
+      <button class="btn_low">too low</button> 
+      <button class="btn_high">too high</button> 
+      <button class="btn_correct">Correct!</button> ?
+    </li>`
+  );
 }
