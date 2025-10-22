@@ -17,11 +17,12 @@ function startGame() {
   console.log("Game started!");
 
   const list = document.getElementById("guesses");
-  // Clear list
+  // clear list
   while (list.firstElementChild) {
     list.removeChild(list.firstElementChild);
   }
 
+  // adds new guess
   addGuess();
 }
 
@@ -32,15 +33,15 @@ function handleGuessClick(event) {
   const li = clickedButton.closest("li");
   const number = li.dataset.guess; // read stored guess
 
-  if (clickedButton.classList.contains("btn_low")) {
+  if (clickedButton.classList.contains("btn_low")) { // too low button
     console.log("TOO LOW");
     li.innerHTML = `I'm guessing ${number} → That was too low!`;
     addGuess();
-  } else if (clickedButton.classList.contains("btn_high")) {
+  } else if (clickedButton.classList.contains("btn_high")) { // too high button
     console.log("TOO HIGH");
     li.innerHTML = `I'm guessing ${number} → That was too high!`;
     addGuess();
-  } else if (clickedButton.classList.contains("btn_correct")) {
+  } else if (clickedButton.classList.contains("btn_correct")) { // correct button
     console.log("CORRECT");
     li.innerHTML = `I'm guessing ${number} → That was correct!`;
 
@@ -55,6 +56,7 @@ function addGuess() {
   const list = document.getElementById("guesses");
   const guess = Math.floor(Math.random() * 100) + 1;
 
+  // inserts html with guess and buttons
   list.insertAdjacentHTML(
     "beforeend",
     `<li data-guess="${guess}">
