@@ -120,8 +120,6 @@ function addGuess(arr) {
   );
 }
 
-function binarySearch(arr, x) {}
-
 // findes the index of the median (middle value's index) of an array, rounded up
 function findMiddleIndex(arr) {
   return Math.floor(arr.length / 2);
