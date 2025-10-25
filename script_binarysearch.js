@@ -60,26 +60,28 @@ function handleGuessClick(event) {
     // too low button
     console.log("TOO LOW");
     li.innerHTML = `I'm guessing ${number} → That was too low!`;
+    // the number is in the upperhalf of the array
+    upperhalf();
     // check if there is only 1 number left in the array, game over!
-    if (l == 1) {
+    if (l <= 1) {
       gameFinished();
       return;
     }
-    // the number is in the upperhalf of the array
-    upperhalf();
     addGuess(arrNumbers);
   } else if (clickedButton.classList.contains("btn_high")) {
     // too high button
     console.log("TOO HIGH");
     li.innerHTML = `I'm guessing ${number} → That was too high!`;
+    // the numbers is in the lowerhalf of the array
+    lowerhalf();
     // check if there is only 1 number left in the array, game over!
-    if (l == 1) {
+    if (l <= 1) {
       gameFinished();
       return;
     }
-    // the numbers is in the lowerhalf of the array
-    lowerhalf();
     addGuess(arrNumbers);
+
+    console.log(arrNumbers);
   } else if (clickedButton.classList.contains("btn_correct")) {
     // correct button
     console.log("CORRECT");
@@ -91,9 +93,9 @@ function handleGuessClick(event) {
   }
   function gameFinished() {
     setComment();
-    if (l == 1) {
+    if (l <= 1) {
       console.log(`Only one number left in the array: ${middle}`);
-      li.innerHTML = `I'm guessing ${number} → That is the last option! I used ${count} guesses, ${comment}`;
+      li.innerHTML = `I'm guessing ${number} → That is the last option, your number was ${middle}! I used ${count} guesses, ${comment}`;
     }
     document.body.insertAdjacentHTML(
       "beforeend",
@@ -139,10 +141,8 @@ function generateData(start, end) {
 // cuts the lowerhalf from the array (so only the upperhalf remains) and saves new values
 function upperhalf() {
   if (l <= 1) return false;
-  arrNumbers = arrNumbers.slice(
-    arrNumbers.indexOf(middle),
-    arrNumbers.indexOf(max) + 1
-  );
+  const middleIndex = arrNumbers.indexOf(middle);
+  arrNumbers = arrNumbers.slice(middleIndex); // exclude current middle
   l = arrNumbers.length - 1;
   min = arrNumbers[0];
   max = arrNumbers[l];
@@ -153,14 +153,12 @@ function upperhalf() {
 // cuts the upperhalf from the arary (so only the lowerhalf remains, and saves new values
 function lowerhalf() {
   if (l <= 1) return false;
-  arrNumbers = arrNumbers.slice(
-    arrNumbers.indexOf(min),
-    arrNumbers.indexOf(middle) + 1
-  );
+  const middleIndex = arrNumbers.indexOf(middle);
+  arrNumbers = arrNumbers.slice(0, middleIndex); // exclude current middle
   l = arrNumbers.length - 1;
   min = arrNumbers[0];
   max = arrNumbers[l];
-  middle = arrNumbers[findMiddleIndex(arrNumbers) - 1];
+  middle = arrNumbers[findMiddleIndex(arrNumbers)];
   return true;
 }
 
