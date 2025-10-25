@@ -62,7 +62,7 @@ function handleGuessClick(event) {
     li.innerHTML = `I'm guessing ${number} → That was too low!`;
     // check if there is only 1 number left in the array, game over!
     if (l == 1) {
-      lastNumber();
+      gameFinished();
       return;
     }
     // the number is in the upperhalf of the array
@@ -74,7 +74,7 @@ function handleGuessClick(event) {
     li.innerHTML = `I'm guessing ${number} → That was too high!`;
     // check if there is only 1 number left in the array, game over!
     if (l == 1) {
-      lastNumber();
+      gameFinished();
       return;
     }
     // the numbers is in the lowerhalf of the array
@@ -88,17 +88,14 @@ function handleGuessClick(event) {
       count == 1 ? `guess` : `guesses` // grammar check if count is 1
     }, ${comment}!`;
 
-    document.body.insertAdjacentHTML(
-      "beforeend",
-      `<p id="endMessage">I'm finally done! :) Would you like to <button id="btn_start">try again?</button> </p>`
-    );
+    gameFinished();
   }
-  function lastNumber() {
+  function gameFinished() {
     setComment();
-    console.log(`Only one number left in the array: ${arrNumbers}`);
-
-    li.innerHTML = `I'm guessing ${number} → That is the last option! I used ${count} guesses, ${comment}`;
-
+    if (l == 1) {
+      console.log(`Only one number left in the array: ${middle}`);
+      li.innerHTML = `I'm guessing ${number} → That is the last option! I used ${count} guesses, ${comment}`;
+    }
     document.body.insertAdjacentHTML(
       "beforeend",
       `<p id="endMessage">I'm finally done! :) Would you like to <button id="btn_start">try again?</button> </p>`
