@@ -15,7 +15,11 @@ function main() {
   console.log("JavaScript is running!");
 
   // add eventlistener for btn_start
-  document.querySelector("#btn_start").addEventListener("click", startGame);
+  document.body.addEventListener("click", (e) => {
+    if (e.target.matches("#btn_start, .btn_start")) {
+      startGame();
+    }
+  });
   // event delegation on the list for low, high and correct buttons
   document
     .querySelector("#guesses")
@@ -28,6 +32,11 @@ function startGame() {
   count = 0;
 
   const list = document.getElementById("guesses");
+
+  // removes the end message if game was restarted
+  const endMsg = document.getElementById("endMessage");
+  if (endMsg) endMsg.remove();
+
   // clear list
   while (list.firstElementChild) {
     list.removeChild(list.firstElementChild);
@@ -78,7 +87,7 @@ function handleGuessClick(event) {
 
     document.body.insertAdjacentHTML(
       "beforeend",
-      `<p>I'm finally done! :) Would you like to <button class="btn_start">try again?</button> </p>`
+      `<p id="endMessage">I'm finally done! :) Would you like to <button id="btn_start">try again?</button> </p>`
     );
   }
   function lastNumber() {
@@ -89,7 +98,7 @@ function handleGuessClick(event) {
 
     document.body.insertAdjacentHTML(
       "beforeend",
-      `<p>I'm finally done! :) Would you like to <button class="btn_start">try again?</button> </p>`
+      `<p id="endMessage">I'm finally done! :) Would you like to <button id="btn_start">try again?</button> </p>`
     );
   }
 }
