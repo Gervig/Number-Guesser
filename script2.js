@@ -5,11 +5,8 @@ window.addEventListener("DOMContentLoaded", main);
 // instantiates initial variables
 let count;
 let comment = ``;
-let arrNumbers = generateData(1, 100);
-let l = arrNumbers.length - 1;
-let min = arrNumbers[0],
-  max = arrNumbers[l],
-  middle = findMiddleIndex(arrNumbers);
+let arrNumbers = [];
+let l, min, max, middle;
 
 function main() {
   console.log("JavaScript is running!");
@@ -28,6 +25,12 @@ function main() {
 
 function startGame() {
   console.log("Game started!");
+  // sets values
+  arrNumbers = generateData(1, 100);
+  l = arrNumbers.length - 1;
+  min = arrNumbers[0];
+  max = arrNumbers[l];
+  middle = findMiddleIndex(arrNumbers);
   // intantiates count as 0, for start and restart
   count = 0;
 
