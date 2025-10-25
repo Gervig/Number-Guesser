@@ -1,2 +1,4 @@
 # Number Guesser
-A game for guessing a number
+A game for guessing a number.
+
+
