@@ -87,7 +87,6 @@ function handleGuessClick(event) {
     li.innerHTML = `I'm guessing ${number} → That was correct! I used ${count} ${
       count == 1 ? `guess` : `guesses` // grammar check if count is 1
     }, ${comment}!`;
-
     gameFinished();
   }
   function gameFinished() {
