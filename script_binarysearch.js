@@ -95,6 +95,7 @@ function handleGuessClick(event) {
     setComment();
     if (l <= 1) {
       console.log(`Only one number left in the array: ${middle}`);
+      if (l == 1) count++;
       li.innerHTML = `I'm guessing ${number} → That is the last option, your number was ${middle}! I used ${count} guesses, ${comment}`;
     }
     document.body.insertAdjacentHTML(
