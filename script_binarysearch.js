@@ -91,8 +91,8 @@ function handleGuessClick(event) {
   }
   function gameFinished() {
     setComment();
-    if (l == 1) {
-      console.log(`Only one number left in the array: ${middle}`);
+    if (l == 0) {
+      console.log(`Only one number left in the array: ${arrNumbers}`);
       li.innerHTML = `I'm guessing ${number} → That is the last option! I used ${count} guesses, ${comment}`;
     }
     document.body.insertAdjacentHTML(
@@ -122,7 +122,7 @@ function addGuess(arr) {
 
 // findes the index of the median (middle value's index) of an array, rounded up
 function findMiddleIndex(arr) {
-  return Math.floor(arr.length / 2);
+  return Math.floor((arr.length ) / 2); // middle index
 }
 
 // generates an array of numbers
@@ -139,28 +139,24 @@ function generateData(start, end) {
 // cuts the lowerhalf from the array (so only the upperhalf remains) and saves new values
 function upperhalf() {
   if (l <= 1) return false;
-  arrNumbers = arrNumbers.slice(
-    arrNumbers.indexOf(middle),
-    arrNumbers.indexOf(max) + 1
-  );
+  const middleIndex = arrNumbers.indexOf(middle);
+  arrNumbers = arrNumbers.slice(middleIndex + 1); // exclude current middle
   l = arrNumbers.length - 1;
   min = arrNumbers[0];
   max = arrNumbers[l];
-  middle = arrNumbers[findMiddleIndex(arrNumbers)];
+  middle = arrNumbers[findMiddleIndex(arrNumbers)-1];
   return true;
 }
 
 // cuts the upperhalf from the arary (so only the lowerhalf remains, and saves new values
 function lowerhalf() {
   if (l <= 1) return false;
-  arrNumbers = arrNumbers.slice(
-    arrNumbers.indexOf(min),
-    arrNumbers.indexOf(middle) + 1
-  );
+  const middleIndex = arrNumbers.indexOf(middle);
+  arrNumbers = arrNumbers.slice(0, middleIndex); // exclude current middle
   l = arrNumbers.length - 1;
   min = arrNumbers[0];
   max = arrNumbers[l];
-  middle = arrNumbers[findMiddleIndex(arrNumbers) - 1];
+  middle = arrNumbers[findMiddleIndex(arrNumbers)];
   return true;
 }
 
