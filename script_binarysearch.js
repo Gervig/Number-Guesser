@@ -60,26 +60,28 @@ function handleGuessClick(event) {
     // too low button
     console.log("TOO LOW");
     li.innerHTML = `I'm guessing ${number} → That was too low!`;
+    // the number is in the upperhalf of the array
+    upperhalf();
     // check if there is only 1 number left in the array, game over!
-    if (l == 1) {
+    if (l <= 1) {
       gameFinished();
       return;
     }
-    // the number is in the upperhalf of the array
-    upperhalf();
     addGuess(arrNumbers);
   } else if (clickedButton.classList.contains("btn_high")) {
     // too high button
     console.log("TOO HIGH");
     li.innerHTML = `I'm guessing ${number} → That was too high!`;
+    // the numbers is in the lowerhalf of the array
+    lowerhalf();
     // check if there is only 1 number left in the array, game over!
-    if (l == 1) {
+    if (l <= 1) {
       gameFinished();
       return;
     }
-    // the numbers is in the lowerhalf of the array
-    lowerhalf();
     addGuess(arrNumbers);
+
+    console.log(arrNumbers);
   } else if (clickedButton.classList.contains("btn_correct")) {
     // correct button
     console.log("CORRECT");
@@ -91,9 +93,9 @@ function handleGuessClick(event) {
   }
   function gameFinished() {
     setComment();
-    if (l == 0) {
-      console.log(`Only one number left in the array: ${arrNumbers}`);
-      li.innerHTML = `I'm guessing ${number} → That is the last option! I used ${count} guesses, ${comment}`;
+    if (l <= 1) {
+      console.log(`Only one number left in the array: ${middle}`);
+      li.innerHTML = `I'm guessing ${number} → That is the last option, your number was ${middle}! I used ${count} guesses, ${comment}`;
     }
     document.body.insertAdjacentHTML(
       "beforeend",
@@ -122,7 +124,7 @@ function addGuess(arr) {
 
 // findes the index of the median (middle value's index) of an array, rounded up
 function findMiddleIndex(arr) {
-  return Math.floor((arr.length ) / 2); // middle index
+  return Math.floor(arr.length / 2);
 }
 
 // generates an array of numbers
@@ -140,11 +142,11 @@ function generateData(start, end) {
 function upperhalf() {
   if (l <= 1) return false;
   const middleIndex = arrNumbers.indexOf(middle);
-  arrNumbers = arrNumbers.slice(middleIndex + 1); // exclude current middle
+  arrNumbers = arrNumbers.slice(middleIndex); // exclude current middle
   l = arrNumbers.length - 1;
   min = arrNumbers[0];
   max = arrNumbers[l];
-  middle = arrNumbers[findMiddleIndex(arrNumbers)-1];
+  middle = arrNumbers[findMiddleIndex(arrNumbers)];
   return true;
 }
 
